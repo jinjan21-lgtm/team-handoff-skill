@@ -27,7 +27,10 @@
 
 | 파일 | 내용 |
 |---|---|
-| `SKILL.md` | 모드 판단, 세션 시작·태스크 완료 절차, 다인 협업 규칙, 문서별 규칙, Red Flags |
+| `SKILL.md` | 핵심만(약 600단어): 모드 판단, 세션 시작·태스크 완료 절차, WORKLOG 양식, 다인 협업 핵심, Red Flags |
+| `team-rules.md` | 다인 협업 상세: 작성자 표기, 착수 표시, 결정 형식·번호 정하는 법, 같은 커밋, 충돌, vibe-flow 연결 |
+| `doc-rules.md` | 문서별 규칙, AI 참조 룰(긴 md), 흔한 실수 |
+| `index-mode.md` | 인덱스 모드(대형 프로젝트): 구조, 세션 시작, 결정, INDEX 같은 커밋, 점검·보관 |
 | `templates.md` | PLAN·WORKLOG·REMAINING·LESSONS 빈 양식 |
 | `examples.md` | 좋은 기록 vs 나쁜 기록 4쌍 |
 | `migration.md` | 단일 파일 → 토픽 디렉토리 전환 |
