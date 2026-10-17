@@ -1,6 +1,6 @@
 ---
 name: team-handoff
-description: (team, shared docs/handoff/) Use when resuming a prior session's project context (PLAN/WORKLOG/REMAINING), when completing tasks that need cross-session progress tracking, or when user mentions handoff/continue/resume/where-did-we-leave-off/인수인계/이어서/어디까지/지난 세션
+description: Use when the repo has a docs/handoff/ folder shared by several people or AI sessions — at session start, when resuming prior context (PLAN/WORKLOG/REMAINING/DECISIONS), after finishing a task that must be logged, or when the user mentions handoff/continue/resume/where-did-we-leave-off/인수인계/이어서/어디까지/지난 세션/오늘 한 일 기록. If there is no docs/handoff/, the personal session-handoff applies instead.
 user-invocable: true
 ---
 
@@ -81,6 +81,8 @@ user-invocable: true
 8. **DECISIONS** — 결정 기록은 삭제·수정 금지, 뒤집을 때는 새 D-nnn + 이전 항목 상태만 「대체됨 → D-nnn」으로 바꾼다. 인덱스 모드에서는:
    - **세션 시작 때 읽지 않는다.** 탐색할 때 작업이 닿는 화면·모듈 태그로 찾는다: `grep "#HOME-01" docs/handoff/DECISIONS.md` → 유효한 줄(대체됨 아님)의 본문만 연다
    - **번호는 `python .claude/skills/vibe-flow/scripts/handoff.py next-id D`로 받는다**(전 브랜치 + 원격 예약). 손으로 「마지막 번호 + 1」을 쓰지 않는다 — 다른 브랜치의 같은 번호가 union으로 조용히 두 줄이 된다
+   - **vibe-flow 스크립트가 없으면:** `git fetch --all` → `git grep -ohE "D-[0-9]{3,}" $(git for-each-ref --format='%(refname)' refs/remotes refs/heads) -- 'docs/handoff/DECISIONS*'`의 최댓값 + 1을 쓰고, 머지 전 `git pull --rebase` 뒤 같은 번호가 두 번 나오는지 다시 grep한다(아직 push 안 된 다른 복제본 번호는 못 막는다 — 겹치면 뒤에 온 쪽이 새 번호로)
+   - **결정 형식(인덱스 모드 아님):** `## D-nnn 제목` · `- 날짜 YYYY-MM-DD · 결정자 @작성자 · 방식 사용자|AI 위임 · 상태 유효` · `- 결정: …` · `- 근거: …(1~2줄)` · `- 영향: …(화면·모듈 ID)`
    - 본문은 안내된 `DECISIONS-YYYY-MM*.md` 끝에 `## D-nnn 제목` 블록, **같은 커밋에** `DECISIONS.md` 끝에 INDEX 한 줄(`- D-nnn · 제목 · 날짜 · @결정자 · 유효 · #태그 → [본문](…)`, 뒤집으면 `대체 D-kkk`). INDEX 줄은 추가만 하고 고치지 않는다
 4. **같은 커밋** — 핸드오프 기록은 그 작업의 코드·문서 변경과 **같은 커밋**에 넣는다. vibe-flow 골 작업은 QA 결과를 보고 기록하므로, QA 뒤 기록을 **마지막 작업 커밋에 합친다**(`git commit --amend`, 이미 push했으면 자기 브랜치에 `--force-with-lease`). 기록만 담은 커밋은 만들지 않는다.
 5. **충돌 처리** — `INDEX.md`·`REMAINING.md`·`LESSONS.md`·`DECISIONS.md`·WORKLOG 토픽 파일과 인덱스 모드의 INDEX·본문 파일(`DECISIONS-YYYY-MM*.md`·`LESSONS-body*.md`·`goals/INDEX.md`·`REMAINING-done-*.md`·`WORKLOG/INDEX-*.md`)은 `.gitattributes`의 `merge=union`으로 양쪽 줄이 자동으로 남는다. union이 남긴 같은 번호·같은 줄 두 개는 `handoff.py lint`가 잡는다. **PR을 머지하기 전에 로컬에서 `git pull --rebase origin main`**으로 브랜치를 최신화한다(union은 로컬 병합에서 동작). 남은 충돌은 양쪽 줄을 모두 남기고 날짜순 정렬. 다른 참여자의 항목 내용은 지우거나 고치지 않는다(완료 체크·착수 표시 변경만 허용).

@@ -51,7 +51,7 @@ docs/handoff/DECISIONS.md merge=union
 docs/handoff/WORKLOG/*.md merge=union
 ```
 
-`CLAUDE.md`(다른 에이전트는 `AGENTS.md`)에 "세션 시작과 작업 완료 때 team-handoff를 실행한다"를 적습니다.
+`CLAUDE.md`(다른 에이전트는 `AGENTS.md`)에 "세션 시작과 작업 완료 때 team-handoff를 실행한다"를 적습니다. 참여자가 개인용 인수인계 스킬(예: session-handoff)도 쓰면, 트리거 말("이어서", "어디까지")이 겹치므로 같은 곳에 **"이 레포에서는 개인 인수인계 스킬 대신 team-handoff를 쓴다"**를 명시합니다.
 
 ## vibe-flow와 함께 쓰기
 
